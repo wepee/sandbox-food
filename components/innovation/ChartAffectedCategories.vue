@@ -1,88 +1,25 @@
 <template>
-  <v-card width="95%" class="text-center pa-3">
+  <v-card class="text-center pa-3">
     <h3>Affected Categories</h3>
     <div v-if="!loading" id="chart">
       <client-only>
-        <apexchart type="treemap" height="350" :options="chartOptions" :series="serieData" />
+        <apexchart type="donut" :options="chartOptions" :series="series" />
       </client-only>
     </div>
   </v-card>
 </template>
 
 <script>
+
+import { colorizeAffectedCategoriesChart } from '~/components/innovation/InnovationMappers'
+import { CATEGORIES } from '~/constants/categories'
+
 export default {
   name: 'ChartAffectedCategories',
   props: {
     serieData: {
       type: Array,
-      default: () => [{
-        data: [
-          {
-            x: 'C1',
-            y: 10
-          },
-          {
-            x: 'C2',
-            y: 10
-          },
-          {
-            x: 'C3',
-            y: 10
-          },
-          {
-            x: 'C4',
-            y: 10
-          },
-          {
-            x: 'C5',
-            y: 1
-          },
-          {
-            x: 'C6',
-            y: 1
-          },
-          {
-            x: 'C7',
-            y: 1
-          },
-          {
-            x: 'C8',
-            y: 1
-          },
-          {
-            x: 'C9',
-            y: 1
-          },
-          {
-            x: 'C10',
-            y: 1
-          },
-          {
-            x: 'C11',
-            y: 1
-          },
-          {
-            x: 'C12',
-            y: 1
-          },
-          {
-            x: 'C13',
-            y: 1
-          },
-          {
-            x: 'C14',
-            y: 1
-          },
-          {
-            x: 'C15',
-            y: 1
-          },
-          {
-            x: 'C16',
-            y: 1
-          }
-        ]
-      }]
+      default: () => [1, 4, 7]
     },
     loading: {
       type: Boolean,
@@ -91,72 +28,69 @@ export default {
   },
   data () {
     return {
+      series: CATEGORIES.map(() => 1),
       chartOptions: {
-        legend: {
-          show: true,
-          showForSingleSeries: true,
-          showForNullSeries: true,
-          showForZeroSeries: true,
-          position: 'bottom',
-          horizontalAlign: 'center',
-          floating: true,
-          fontSize: '14px',
-          fontFamily: 'Helvetica, Arial',
-          fontWeight: 400,
-          formatter: undefined,
-          inverseOrder: false,
-          width: undefined,
-          height: undefined,
-          tooltipHoverFormatter: undefined,
-          customLegendItems: [],
-          offsetX: 0,
-          offsetY: 0,
-          labels: {
-            colors: undefined,
-            useSeriesColors: false
-          },
-          markers: {
-            width: 12,
-            height: 12,
-            strokeWidth: 0,
-            strokeColor: '#fff',
-            fillColors: undefined,
-            radius: 12,
-            customHTML: undefined,
-            onClick: undefined,
-            offsetX: 0,
-            offsetY: 0
-          },
-          itemMargin: {
-            horizontal: 5,
-            vertical: 0
-          },
-          onItemClick: {
-            toggleDataSeries: true
-          },
-          onItemHover: {
-            highlightDataSeries: true
-          }
-        },
-        yaxis: {
-          labels: {
-            formatter (value) {
-              return value === 1 ? 'Not affected' : 'Affected'
-            }
-          }
-        },
-        xaxis: {
-          labels: {
-            show: true,
-            formatter (value) {
-              return value === 'C1'
-            }
-          }
-        },
         chart: {
-          height: 350,
-          type: 'treemap'
+          width: 480,
+          type: 'donut'
+        },
+        tooltip: {
+          y: {
+            formatter (value, { series, seriesIndex, dataPointIndex, w }) {
+              return 'C' + (seriesIndex + 1)
+            }
+          },
+          style: {
+            fontSize: '16px'
+          }
+        },
+        legend: {
+          show: false
+        },
+        labels: CATEGORIES.map(a => a.name),
+        colors: colorizeAffectedCategoriesChart(this.serieData),
+        plotOptions: {
+          pie: {
+            startAngle: 0,
+            endAngle: 360,
+            expandOnClick: true,
+            offsetX: 0,
+            offsetY: 0,
+            dataLabels: {
+              offset: 0,
+              minAngleToShowLabel: 10
+            },
+            donut: {
+              size: '65%',
+              background: 'transparent',
+              labels: {
+                show: true,
+                total: {
+                  show: true,
+                  showAlways: true,
+                  label: 'Affected Categories',
+                  fontSize: '22px',
+                  fontFamily: 'Helvetica, Arial, sans-serif',
+                  fontWeight: 600,
+                  color: '#373d3f',
+                  formatter: function (w) {
+                    return this.serieData.length
+                  }.bind(this)
+                }
+              }
+            }
+          }
+        },
+        dataLabels: {
+          enabled: true,
+          style: {
+            fontSize: '18px'
+          },
+          formatter: (value, { seriesIndex }) => {
+            return 'C' + (seriesIndex + 1)
+          }
         }
+
       }
     }
   }
@@ -179,6 +113,5 @@ h3{
 
 .style-2 {
   background-color: lightblue;
-
 }
 </style>

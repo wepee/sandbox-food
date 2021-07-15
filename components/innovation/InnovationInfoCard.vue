@@ -7,11 +7,11 @@
       <v-row>
         <v-col align="center">
           <v-list-item-avatar size="128" class="ma-3">
-            <v-img src="https://randomuser.me/api/portraits/women/85.jpg" />
+            <v-img :src="innovation.pictureUrl" />
           </v-list-item-avatar>
           <v-list-item-content>
             <v-list-item class="text-h6 text-center">
-              {{ innovation.firstName + ' ' + innovation.lastName }}
+              {{ innovation.name }}
             </v-list-item>
           </v-list-item-content>
         </v-col>
@@ -65,9 +65,9 @@
           </v-list-item-icon>
 
           <v-list-item-content>
-            <v-list-item-title>Positionning</v-list-item-title>
+            <v-list-item-title>Positioning</v-list-item-title>
             <v-list-item-subtitle>
-              {{ innovation.Positionning }}
+              {{ innovation.positioning }}
             </v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
@@ -84,8 +84,6 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
-      <v-spacer />
-      <a href="javascript:if(window.print)window.print()">Print</a>
     </v-col>
   </v-card>
 </template>

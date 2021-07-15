@@ -1,33 +1,29 @@
-export function intToEvaluation (int) {
-  switch (int) {
-    case 1 : return ''
-    case 2 : return ''
-    case 3 : return ''
-    case 4 : return ''
-    case 5 : return ''
-    case 6 : return ''
-    case 7 : return ''
-    case 8 : return ''
-    case 9 : return ''
-    case 10 : return ''
-    case 11 : return ''
-    case 12 : return ''
-  }
+import { EVALUATION_X, EVALUATION_Y } from '~/constants/evaluation'
+import { CATEGORIES_COLORS, NOT_AFFECTED_COLOR } from '~/constants/colors'
+
+export function intToYEvaluation (int) {
+  return EVALUATION_Y[int]
 }
 
-export function evaluationToInt (int) {
-  switch (int) {
-    case 1 : return ''
-    case 2 : return ''
-    case 3 : return ''
-    case 4 : return ''
-    case 5 : return ''
-    case 6 : return ''
-    case 7 : return ''
-    case 8 : return ''
-    case 9 : return ''
-    case 10 : return ''
-    case 11 : return ''
-    case 12 : return ''
+export function evaluationToYInt (evaluation) {
+  return EVALUATION_Y.findIndex(a => a === evaluation)
+}
+
+export function intToXEvaluation (int) {
+  return EVALUATION_X[int]
+}
+
+export function evaluationToXInt (evaluation) {
+  return EVALUATION_X.findIndex(a => a === evaluation)
+}
+
+export function colorizeAffectedCategoriesChart (affectedCategories) {
+  const result = []
+  for (let i = 0; i < 16; i++) {
+    result.push(NOT_AFFECTED_COLOR)
   }
+
+  if (affectedCategories && !affectedCategories.includes(0)) { affectedCategories.forEach((a) => { result[a - 1] = CATEGORIES_COLORS[a] }) }
+
+  return result
 }

@@ -1,95 +1,21 @@
 <template>
-  <v-card width="95%" class="text-center pa-3">
+  <v-card class="text-center pa-3">
     <h3>CSR Profile</h3>
     <div v-if="!loading" id="chart">
       <client-only>
-        <apexchart type="bar" height="350" :options="chartOptions" :series="serieData" />
+        <highcharts :options="chartOptions" :callback="myCallback" />
       </client-only>
     </div>
   </v-card>
 </template>
 
 <script>
+
+import { CSR_COLORS } from '~/constants/colors'
+
 export default {
   name: 'ChartCsrProfile',
   props: {
-    serieData: {
-      type: Array,
-      default: () => [{
-        data: [{
-          x: '2011',
-          y: 12,
-          goals: [
-            {
-              name: 'Expected',
-              value: 14,
-              strokeWidth: 5,
-              strokeColor: '#775DD0'
-            }
-          ]
-        },
-        {
-          x: '2012',
-          y: 44,
-          goals: [
-            {
-              name: 'Expected',
-              value: 54,
-              strokeWidth: 5,
-              strokeColor: '#775DD0'
-            }
-          ]
-        },
-        {
-          x: '2013',
-          y: 54,
-          goals: [
-            {
-              name: 'Expected',
-              value: 52,
-              strokeWidth: 5,
-              strokeColor: '#775DD0'
-            }
-          ]
-        },
-        {
-          x: '2014',
-          y: 66,
-          goals: [
-            {
-              name: 'Expected',
-              value: 65,
-              strokeWidth: 5,
-              strokeColor: '#775DD0'
-            }
-          ]
-        },
-        {
-          x: '2015',
-          y: 81,
-          goals: [
-            {
-              name: 'Expected',
-              value: 66,
-              strokeWidth: 5,
-              strokeColor: '#775DD0'
-            }
-          ]
-        },
-        {
-          x: '2016',
-          y: 67,
-          goals: [
-            {
-              name: 'Expected',
-              value: 70,
-              strokeWidth: 5,
-              strokeColor: '#775DD0'
-            }
-          ]
-        }]
-      }]
-    },
     loading: {
       type: Boolean,
       default: false
@@ -98,44 +24,75 @@ export default {
   data () {
     return {
       chartOptions: {
+        annotations: [{
+          shapes: [{
+            point: 30,
+            type: 'circle',
+            r: 10
+          }, {
+            point: '3',
+            type: 'rect',
+            width: 20,
+            height: 20
+          }],
+          labels: [{
+            point: { x: 'D', y: 10 },
+            text: 'Label'
+          }]
+        }],
         chart: {
-          type: 'bar',
-          height: 350
-        },
-        plotOptions: {
-          bar: {
-            borderRadius: 10,
-            horizontal: true
+          type: 'pyramid3d',
+          options3d: {
+            enabled: true,
+            alpha: 10,
+            depth: 50,
+            viewDistance: 50
           }
         },
-        dataLabels: {
-          enabled: false
+        colorByPoint: true,
+        colors: CSR_COLORS,
+        title: {
+          text: ''
         },
-        xaxis: {
-          categories: ['A', 'B', 'C', 'D', 'E']
-        }
+        plotOptions: {
+
+          series: {
+            dataLabels: {
+              enabled: true,
+              format: '<b>{point.name}</b>',
+              allowOverlap: true,
+              x: 10,
+              y: -5
+            },
+            width: '60%',
+            height: '80%',
+            center: ['50%', '45%']
+          }
+        },
+        series: [
+          {
+            data: [
+              ['E', 10],
+              ['D', 10],
+              [' ', 5],
+              ['Your innovation', 1],
+              ['C', 5],
+              ['B', 10],
+              ['A', 10]
+            ]
+          }
+        ]
       }
+    }
+  },
+  mounted () {},
+  methods: {
+    myCallback () {
+      console.log('this is callback function')
     }
   }
 }
 </script>
 
-<style scoped>
-h3{
-  margin: 10px;
-}
-</style>
-
 <style>
-h3{
-  margin: 10px;
-}
-
-.style-1 {
-}
-
-.style-2 {
-  background-color: lightblue;
-
-}
 </style>

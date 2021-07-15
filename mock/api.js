@@ -1,4 +1,4 @@
-import { Innovation } from './db'
+import { categoriesRanking, Innovation } from './db'
 
 function mockGetInnovation () {
   return new Promise((resolve) => {
@@ -6,4 +6,10 @@ function mockGetInnovation () {
   })
 }
 
-export { mockGetInnovation }
+function mockGetCategoriesRanking () {
+  return new Promise((resolve) => {
+    resolve(categoriesRanking)
+  })
+}
+
+export { mockGetInnovation, mockGetCategoriesRanking }

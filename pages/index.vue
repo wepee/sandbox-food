@@ -1,16 +1,18 @@
 <template>
   <v-container>
     <h1>Families</h1>
-    <Map />
+    <p>{{ test }}</p>
   </v-container>
 </template>
 
 <script>
-import Map from '../components/commons/Map'
+import { colorizeAffectedCategoriesChart } from '~/components/innovation/InnovationMappers'
 
 export default {
-  components: {
-    Map
+  data () {
+    return {
+      test: colorizeAffectedCategoriesChart([1, 3, 4])
+    }
   }
 }
 </script>

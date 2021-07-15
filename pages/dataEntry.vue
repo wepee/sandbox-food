@@ -10,7 +10,7 @@
               md="4"
             >
               <v-text-field
-                v-model="innovationName"
+                v-model="innovation.name"
                 :rules="Rules"
                 label="Name of innovation"
                 required
@@ -48,10 +48,14 @@
 </template>
 
 <script>
+const innovation = {
+  name: ''
+}
 
 export default {
   data () {
     return {
+      innovation,
       valid: false,
       innovationName: '',
       lastname: '',

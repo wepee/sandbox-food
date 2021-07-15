@@ -1,5 +1,15 @@
 h3 {
-  //font-family: 'Poppins', sans-serif!important;
-  //font-weight: 500;
   color: #3C64B1;
+}
+
+.highcharts-credits{
+  display: none;
+}
+
+.leaflet-bottom {
+  display: none;
+}
+
+.highcharts-plot-line{
+  transform: translateY(39%);
 }

@@ -1,4 +1,4 @@
-import { mockGetInnovation } from '../mock/api'
+import { mockGetCategoriesRanking, mockGetInnovation } from '~/mock/api'
 
 async function getInnovation () {
   try {
@@ -7,5 +7,12 @@ async function getInnovation () {
     console.error(err)
   }
 }
+async function getCategoriesRanking () {
+  try {
+    return await mockGetCategoriesRanking()
+  } catch (err) {
+    console.error(err)
+  }
+}
 
-export { getInnovation }
+export { getInnovation, getCategoriesRanking }

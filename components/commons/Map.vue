@@ -1,5 +1,5 @@
 <template>
-  <v-card :loading="loading" width="95%" class="text-center pa-3">
+  <v-card :loading="loading" class="text-center pa-3">
     <h3>Location : {{ city }}</h3>
     <div v-if="!loading" id="map-wrap" style="height: 350px">
       <client-only>

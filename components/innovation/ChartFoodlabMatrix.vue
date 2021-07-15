@@ -1,5 +1,5 @@
 <template>
-  <v-card width="95%" class="text-center pa-3">
+  <v-card class="text-center pa-3">
     <h3>Potential Durability</h3>
     <div id="chart">
       <client-only>

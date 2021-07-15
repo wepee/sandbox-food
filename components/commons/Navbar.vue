@@ -1,6 +1,6 @@
 <template>
   <v-app-bar
-    app
+    color="white"
     flat
     class="px-15"
   >
@@ -81,5 +81,11 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+@import "../../assets/variables";
+
+strong, a {
+  //color: $SECONDARY!important;
+  text-decoration: none!important;
+}
 </style>
