@@ -2,7 +2,7 @@
   <v-row>
     <v-col align="center">
       <v-img class="ma-10" max-width="300" src="/logo-food-analytics.png" />
-      <v-card max-width="600" class="pa-10">
+      <v-card max-width="600" class="ma-5 pa-10">
         <v-text-field
           id="email"
           v-model="email"
