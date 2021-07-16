@@ -69,7 +69,7 @@ export default {
                   show: true,
                   showAlways: true,
                   label: 'Affected Categories',
-                  fontSize: '22px',
+                  fontSize: '18px',
                   fontFamily: 'Helvetica, Arial, sans-serif',
                   fontWeight: 600,
                   color: '#373d3f',

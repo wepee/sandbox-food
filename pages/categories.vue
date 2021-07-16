@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import { CATEGORIES } from '../constants/categories'
+import { CATEGORIES } from '~/constants/categories'
 
 export default {
   data () {
