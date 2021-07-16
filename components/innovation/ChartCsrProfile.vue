@@ -3,7 +3,7 @@
     <h3>CSR Profile</h3>
     <div v-if="!loading" id="chart">
       <client-only>
-        <highcharts :options="chartOptions" :callback="myCallback" />
+        <apexchart type="bar" height="350" :options="chartOptions" :series="series" />
       </client-only>
     </div>
   </v-card>
@@ -12,10 +12,20 @@
 <script>
 
 import { CSR_COLORS } from '~/constants/colors'
+import { getAnnotationOffset } from '~/components/innovation/InnovationMappers'
+import { INITIAL_OFFSET } from '~/constants/chart'
 
 export default {
   name: 'ChartCsrProfile',
   props: {
+    name: {
+      type: String,
+      default: 'Tracy Chang'
+    },
+    serieData: {
+      type: Number,
+      default: 2.5
+    },
     loading: {
       type: Boolean,
       default: false
@@ -23,66 +33,90 @@ export default {
   },
   data () {
     return {
+      series: [{
+        data: [50, 40, 30, 20, 10]
+      }],
       chartOptions: {
-        annotations: [{
-          shapes: [{
-            point: 30,
-            type: 'circle',
-            r: 10
-          }, {
-            point: '3',
-            type: 'rect',
-            width: 20,
-            height: 20
-          }],
-          labels: [{
-            point: { x: 'D', y: 10 },
-            text: 'Label'
-          }]
-        }],
         chart: {
-          type: 'pyramid3d',
-          options3d: {
-            enabled: true,
-            alpha: 10,
-            depth: 50,
-            viewDistance: 50
-          }
+          type: 'bar',
+          height: 380
         },
-        colorByPoint: true,
-        colors: CSR_COLORS,
-        title: {
-          text: ''
+        annotations: {
+          yaxis: [{
+            y: 'A',
+            borderColor: 'black',
+            borderWidth: 3,
+            strokeDashArray: 0,
+            offsetY: INITIAL_OFFSET - getAnnotationOffset(this.serieData) - INITIAL_OFFSET / 10,
+            label: {
+              offsetY: INITIAL_OFFSET - getAnnotationOffset(this.serieData) - INITIAL_OFFSET / 10,
+              borderColor: 'black',
+              style: {
+                color: '#fff',
+                background: 'black'
+              },
+              text: this.name
+            }
+          }]
         },
         plotOptions: {
-
-          series: {
+          bar: {
+            barHeight: '100%',
+            distributed: true,
+            horizontal: true,
             dataLabels: {
-              enabled: true,
-              format: '<b>{point.name}</b>',
-              allowOverlap: true,
-              x: 10,
-              y: -5
-            },
-            width: '60%',
-            height: '80%',
-            center: ['50%', '45%']
+              position: 'bottom'
+            }
           }
         },
-        series: [
-          {
-            data: [
-              ['E', 10],
-              ['D', 10],
-              [' ', 5],
-              ['Your innovation', 1],
-              ['C', 5],
-              ['B', 10],
-              ['A', 10]
-            ]
+        colors: CSR_COLORS,
+        dataLabels: {
+          enabled: true,
+          textAnchor: 'start',
+          style: {
+            colors: ['#fff']
+          },
+          formatter (val, opt) {
+            return opt.w.globals.labels[opt.dataPointIndex]
+          },
+          dropShadow: {
+            enabled: true
           }
-        ]
+        },
+        stroke: {
+          width: 1,
+          colors: ['#fff']
+        },
+        xaxis: {
+          categories: ['A', 'B', 'C', 'D', 'E']
+        },
+        yaxis: {
+          labels: {
+            show: true,
+            seriesName: ['ntm', 'ntm']
+          }
+        },
+        tooltip: {
+          theme: 'light',
+          enabled: false,
+          x: {
+            show: false,
+            title: {
+              formatter (val) {
+                return val
+              }
+            }
+          },
+          y: {
+            title: {
+              formatter (val) {
+                return ''
+              }
+            }
+          }
+        }
       }
+
     }
   },
   mounted () {},

@@ -28,4 +28,4 @@ export const CATEGORIES_COLORS = [
 
 export const NOT_AFFECTED_COLOR = '#bfbfbf'
 
-export const CSR_COLORS = ['#bf0000', '#ed7d31', '#feff00', 'blue', '#feff00', '#00b050', '#92d050']
+export const CSR_COLORS = ['#92d050', '#00b050', '#feff00', '#ed7d31', '#bf0000']

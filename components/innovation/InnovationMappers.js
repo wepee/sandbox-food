@@ -1,5 +1,6 @@
 import { EVALUATION_X, EVALUATION_Y } from '~/constants/evaluation'
 import { CATEGORIES_COLORS, NOT_AFFECTED_COLOR } from '~/constants/colors'
+import { INITIAL_OFFSET } from '~/constants/chart'
 
 export function intToYEvaluation (int) {
   return EVALUATION_Y[int]
@@ -26,4 +27,8 @@ export function colorizeAffectedCategoriesChart (affectedCategories) {
   if (affectedCategories && !affectedCategories.includes(0)) { affectedCategories.forEach((a) => { result[a - 1] = CATEGORIES_COLORS[a] }) }
 
   return result
+}
+
+export function getAnnotationOffset (csrEvaluation) {
+  return (csrEvaluation * INITIAL_OFFSET) / 5
 }
