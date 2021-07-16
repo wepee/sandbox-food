@@ -2,7 +2,13 @@
   <v-container>
     <h1>Categories</h1>
     <v-row>
-      <v-col v-for="(category, index) in categories" :key="index" cols="3">
+      <v-col
+        v-for="(category, index) in categories"
+        :key="index"
+        cols="6"
+        md="4"
+        lg="3"
+      >
         <v-card
           class="mx-auto"
           max-width="344"
