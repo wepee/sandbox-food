@@ -13,113 +13,60 @@
       </v-card-title>
       <v-data-table
         :headers="headers"
-        :items="desserts"
+        :items="data"
         :search="search"
-      />
+      >
+        <template #[`item.name`]="{ item }">
+          <div style="display: flex; align-items: center">
+            <country-flag style="margin: 1px" :country="item.countryCode" size="small" />
+            {{ item.name }}
+          </div>
+        </template>
+      </v-data-table>
     </v-card>
   </v-container>
 </template>
 
 <script>
+import { getCategoriesRanking, getInnovation } from '~/services/innovations-services'
 
 export default {
+  props: {
+    loading: {
+      type: Boolean,
+      default: false
+    },
+    currentInnovation: {
+      type: Object,
+      default: () => {
+        return { name: 'Tracy Chang', id: 13, countryCode: 'DE', index: 76.54 }
+      }
+    },
+    categoryRanking: {
+      type: Array,
+      default: () => {
+        return [{ name: 'innovation 1', countryCode: 'fr', index: 66.6 }, { name: 'innovation 2', countryCode: 'usa', index: 86.6 }, { name: 'innovation 3', countryCode: 'dz', index: 63.6 }, { name: 'innovation 4', countryCode: 'CH', index: 71.6 }]
+      }
+    }
+  },
   data () {
     return {
       search: '',
       headers: [
         {
-          text: 'Dessert (100g serving)',
-          align: 'start',
-          filterable: false,
+          text: 'Innovation name',
+          align: 'center',
+          sortable: false,
           value: 'name'
         },
-        { text: 'Calories', value: 'calories' },
-        { text: 'Fat (g)', value: 'fat' },
-        { text: 'Carbs (g)', value: 'carbs' },
-        { text: 'Protein (g)', value: 'protein' },
-        { text: 'Iron (%)', value: 'iron' }
+        { text: 'Incremental', align: 'center', value: 'incrementalValueInnovation' },
+        { text: 'Acceleration', align: 'center', value: 'accelerationDiffusionScalability' },
+        { text: 'Ecosystem dynamics', align: 'center', value: 'ecosystemDynamics' },
+        { text: 'Index', align: 'center', value: 'index' }
       ],
-      desserts: [
-        {
-          name: 'Frozen Yogurt',
-          calories: 159,
-          fat: 6.0,
-          carbs: 24,
-          protein: 4.0,
-          iron: '1%'
-        },
-        {
-          name: 'Ice cream sandwich',
-          calories: 237,
-          fat: 9.0,
-          carbs: 37,
-          protein: 4.3,
-          iron: '1%'
-        },
-        {
-          name: 'Eclair',
-          calories: 262,
-          fat: 16.0,
-          carbs: 23,
-          protein: 6.0,
-          iron: '7%'
-        },
-        {
-          name: 'Cupcake',
-          calories: 305,
-          fat: 3.7,
-          carbs: 67,
-          protein: 4.3,
-          iron: '8%'
-        },
-        {
-          name: 'Gingerbread',
-          calories: 356,
-          fat: 16.0,
-          carbs: 49,
-          protein: 3.9,
-          iron: '16%'
-        },
-        {
-          name: 'Jelly bean',
-          calories: 375,
-          fat: 0.0,
-          carbs: 94,
-          protein: 0.0,
-          iron: '0%'
-        },
-        {
-          name: 'Lollipop',
-          calories: 392,
-          fat: 0.2,
-          carbs: 98,
-          protein: 0,
-          iron: '2%'
-        },
-        {
-          name: 'Honeycomb',
-          calories: 408,
-          fat: 3.2,
-          carbs: 87,
-          protein: 6.5,
-          iron: '45%'
-        },
-        {
-          name: 'Donut',
-          calories: 452,
-          fat: 25.0,
-          carbs: 51,
-          protein: 4.9,
-          iron: '22%'
-        },
-        {
-          name: 'KitKat',
-          calories: 518,
-          fat: 26.0,
-          carbs: 65,
-          protein: 7,
-          iron: '6%'
-        }
+      data: [
+        this.currentInnovation,
+        ...this.categoryRanking
       ]
     }
   },
@@ -127,6 +74,11 @@ export default {
     return {
       title: 'Ranking'
     }
+  },
+  async mounted () {
+    const currentInnovation = await getInnovation()
+    const categoriesRanking = await getCategoriesRanking()
+    this.data = [currentInnovation, ...categoriesRanking]
   }
 }
 </script>
